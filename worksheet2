@@ -1,0 +1,286 @@
+# ============================================================
+# Worksheet 2:
+
+# -------------------------
+# Q1: List Operations
+# -------------------------
+L = [11, 12, 13, 14]
+
+# (i) Add 50 and 60
+L.append(50)
+L.append(60)
+print("(i)", L)
+
+# (ii) Remove 11 and 13
+L.remove(11)
+L.remove(13)
+print("(ii)", L)
+
+# (iii) Sort ascending
+L.sort()
+print("(iii)", L)
+
+# (iv) Sort descending
+L.sort(reverse=True)
+print("(iv)", L)
+
+# (v) Search for 13
+if 13 in L:
+    print("(v) 13 is present")
+else:
+    print("(v) 13 not found")
+
+# (vi) Count elements
+print("(vi) Count:", len(L))
+
+# (vii) Sum of elements
+s = 0
+for i in L:
+    s += i
+print("(vii) Sum:", s)
+
+# (viii) Sum of odd numbers
+s = 0
+for i in L:
+    if i % 2 != 0:
+        s += i
+print("(viii) Odd Sum:", s)
+
+# (ix) Sum of even numbers
+s = 0
+for i in L:
+    if i % 2 == 0:
+        s += i
+print("(ix) Even Sum:", s)
+
+# (x) Sum of prime numbers
+def is_prime(n):
+    if n < 2:
+        return False
+    for j in range(2, n):
+        if n % j == 0:
+            return False
+    return True
+
+s = 0
+for i in L:
+    if is_prime(i):
+        s += i
+print("(x) Prime Sum:", s)
+
+# (xi) Clear list
+L.clear()
+print("(xi)", L)
+
+# (xii) Delete list
+# del L   # (will delete list completely)
+
+
+# -------------------------
+# Q2: Sum list without inbuilt function
+# -------------------------
+nums = [1, 2, 3, 4, 5]
+s = 0
+for i in nums:
+    s += i
+print("\nQ2 Sum:", s)
+
+
+# -------------------------
+# Q3: Multiply list without inbuilt function
+# -------------------------
+nums = [1, 2, 3, 4, 5]
+p = 1
+for i in nums:
+    p *= i
+print("Q3 Product:", p)
+
+
+# -------------------------
+# Q4: Generate 3*4*6 3D array
+# -------------------------
+arr = []
+for i in range(3):
+    a = []
+    for j in range(4):
+        b = []
+        for k in range(6):
+            b.append('*')
+        a.append(b)
+    arr.append(a)
+print("Q4 3D Array:", arr)
+
+
+# -------------------------
+# Q5: Dictionary Operations
+# -------------------------
+D = {1: 5.6, 2: 7.8, 3: 6.6, 4: 8.7, 5: 7.7}
+
+# (i) Add entry key=8, value=8.8
+D[8] = 8.8
+print("\nQ5 (i)", D)
+
+# (ii) Remove key=2
+del D[2]
+print("(ii)", D)
+
+# (iii) Check if key=6 exists
+if 6 in D:
+    print("(iii) Key 6 present")
+else:
+    print("(iii) Key 6 not present")
+
+# (iv) Count elements
+print("(iv) Count:", len(D))
+
+# (v) Add all values
+s = 0
+for v in D.values():
+    s += v
+print("(v) Sum of values:", s)
+
+# (vi) Update value of key=3 to 7.1
+D[3] = 7.1
+print("(vi)", D)
+
+# (vii) Clear dictionary
+D.clear()
+print("(vii)", D)
+
+
+# -------------------------
+# Q6: Set Operations
+# -------------------------
+S1 = {10, 20, 30, 40, 50, 60}
+S2 = {40, 50, 60, 70, 80, 90}
+
+# (i) Add 55 and 66
+S1.add(55)
+S1.add(66)
+print("\nQ6 (i)", S1)
+
+# (ii) Remove 10 and 30
+S1.remove(10)
+S1.remove(30)
+print("(ii)", S1)
+
+# (iii) Check if 40 is present
+if 40 in S1:
+    print("(iii) 40 is present")
+else:
+    print("(iii) 40 not present")
+
+# (iv) Union
+print("(iv)", S1 | S2)
+
+# (v) Intersection
+print("(v)", S1 & S2)
+
+# (vi) Difference
+print("(vi)", S1 - S2)
+
+
+
+import random
+import string
+
+# -------------------------
+# Q7 (i) 100 random strings (length 6–8)
+# -------------------------
+for i in range(100):
+    length = random.randint(6, 8)
+    s = ""
+    for j in range(length):
+        s += random.choice(string.ascii_letters)  # upper/lower case letters
+    print("(Q7 i)", s)
+
+# (ii) Print numbers between 600 and 800
+for i in range(600, 801):
+    print("(Q7 ii)", i)
+
+# (iii) Print numbers between 100 and 1000 divisible by 7 and 9
+for i in range(100, 1001):
+    if i % 7 == 0 and i % 9 == 0:
+        print("(Q7 iii)", i)
+
+
+# -------------------------
+# Q8: Display exam schedule
+# -------------------------
+exam_st_date = (11, 12, 2025)
+print("\nQ8: The examination will start from: %i / %i / %i" % exam_st_date)
+
+
+# -------------------------
+# Q9: Print only numbers divisible by 5
+# -------------------------
+numbers = [10, 23, 45, 60, 77, 90, 100]
+for i in numbers:
+    if i % 5 == 0:
+        print("(Q9)", i)
+
+
+# -------------------------
+# Q10: Check even or odd using boolean
+# -------------------------
+n = 13
+is_even = (n % 2 == 0)
+if is_even:
+    print("(Q10)", n, "is Even")
+else:
+    print("(Q10)", n, "is Odd")
+
+
+# -------------------------
+# Q11: Count substring "Emma"
+# -------------------------
+s = "Emma is a good girl. Emma studies well. Emma likes Python."
+count = 0
+for i in range(len(s) - 3):
+    if s[i:i+4] == "Emma":
+        count += 1
+print("(Q11) Count of 'Emma':", count)
+
+
+# -------------------------
+# Q12: Merge two lists with odd from first and even from second
+# -------------------------
+list1 = [10, 15, 20, 25, 30]
+list2 = [2, 3, 4, 5, 6, 7, 8]
+new_list = []
+for i in list1:
+    if i % 2 != 0:
+        new_list.append(i)
+for j in list2:
+    if j % 2 == 0:
+        new_list.append(j)
+print("(Q12) New List:", new_list)
+
+
+# -------------------------
+# Q13: Robot positions where x is even
+# -------------------------
+positions = [(2, 3), (4, 5), (6, 7), (7, 8)]
+for p in positions:
+    if p[0] % 2 == 0:
+        print("(Q13)", p)
+
+
+# -------------------------
+# Q14: Sensor readings > 3.0
+# -------------------------
+sensor_data = {1: 2.3, 2: 4.5, 3: 1.8, 4: 3.6}
+for k, v in sensor_data.items():
+    if v > 3.0:
+        print("(Q14) Sensor ID:", k)
+
+
+# -------------------------
+# Q15: Find commands not executed
+# -------------------------
+commands_received = ["MOVE", "TURN LEFT", "TURN RIGHT", "STOP"]
+commands_executed = ["MOVE", "TURN LEFT", "STOP"]
+
+for c in commands_received:
+    if c not in commands_executed:
+        print("(Q15) Not executed:", c)
