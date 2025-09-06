@@ -1,0 +1,158 @@
+# Question 1
+def difference(n):
+    if n > 17:
+        return 2 * abs(n - 17)
+    else:
+        return 17 - n
+
+
+# Question 2
+def test_range(n):
+    return (100 <= n <= 1000) or (n == 2000)
+
+
+# Question 3
+def reverse_string(s):
+    return s[::-1]
+
+
+# Question 4
+def count_case(s):
+    result = {"UPPER": 0, "LOWER": 0}
+    for ch in s:
+        if ch.isupper():
+            result["UPPER"] += 1
+        elif ch.islower():
+            result["LOWER"] += 1
+    return result
+
+
+# Question 5
+def unique_list(lst):
+    return list(set(lst))
+
+
+# Question 6
+def even_numbers(lst):
+    return [x for x in lst if x % 2 == 0]
+
+
+# Question 7
+def robot():
+    def move():
+        return "Robot is moving"
+    return move()
+
+
+# Question 8
+def student(name, age, course):
+    def display():
+        return f"Name: {name}, Age: {age}, Course: {course}"
+    return display()
+
+
+# Question 9
+def move_robot(x, y, direction):
+    if direction == "up":
+        y += 1
+    elif direction == "down":
+        y -= 1
+    elif direction == "left":
+        x -= 1
+    elif direction == "right":
+        x += 1
+    return (x, y)
+
+
+# Question 10
+def classify_temperature(temp):
+    if temp < 15:
+        return "Cold"
+    elif 15 <= temp <= 30:
+        return "Moderate"
+    else:
+        return "Hot"
+
+
+# Question 11
+def is_goal_reached(path):
+    x, y = 0, 0
+    for move in path:
+        if move == "up":
+            y += 1
+        elif move == "down":
+            y -= 1
+        elif move == "left":
+            x -= 1
+        elif move == "right":
+            x += 1
+    return (x, y) == (2, 0)
+
+
+# Question 12
+class Student:
+    def _init_(self, student_id, student_name, student_class):
+        self.student_id = student_id
+        self.student_name = student_name
+        self.student_class = student_class
+
+    def display(self):
+        return f"ID: {self.student_id}, Name: {self.student_name}, Class: {self.student_class}"
+
+
+# Question 13
+class Student2:
+    def _init_(self, student_id, student_name, student_class):
+        self.student_id = student_id
+        self.student_name = student_name
+        self.student_class = student_class
+
+    def display(self):
+        return f"ID: {self.student_id}, Name: {self.student_name}, Class: {self.student_class}"
+
+
+student1 = Student2(1, "Navya", "CSE")
+student2 = Student2(2, "Aarav", "ME")
+
+
+# Question 14
+class Circle:
+    def _init_(self, radius):
+        self.radius = radius
+
+    def area(self):
+        return 3.14 * self.radius * self.radius
+
+    def perimeter(self):
+        return 2 * 3.14 * self.radius
+
+
+# Question 15
+class StringClass:
+    def get_String(self, s):
+        self.s = s
+
+    def print_String(self):
+        return self.s.upper()
+
+
+# Question 16
+class Robot:
+    def _init_(self, name, task, battery_level=100):
+        self.name = name
+        self.task = task
+        self.battery_level = battery_level
+
+    def perform_task(self):
+        if self.battery_level > 0:
+            print(f"{self.name} is performing {self.task}")
+            self.battery_level -= 10
+        else:
+            print("Battery empty! Please recharge.")
+
+    def recharge(self):
+        self.battery_level = 100
+        print("Battery recharged to 100%")
+
+    def status(self):
+        return f"Name: {self.name}, Task: {self.task}, Battery: {self.battery_level}%"
