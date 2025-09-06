@@ -1,0 +1,104 @@
+# Question 1
+def twinkle():
+    print("Twinkle, twinkle, little star,")
+    print("How I wonder what you are!")
+    print("Up above the world so high, Like a diamond in the sky.")
+    print("Twinkle, twinkle, little star,")
+    print("How I wonder what you are!")
+
+
+# Question 2
+def reverse_name():
+    first = input("Enter first name: ")
+    last = input("Enter last name: ")
+    print(last + " " + first)
+
+
+# Question 3
+def circle_area(radius):
+    return 3.14 * radius * radius
+
+
+# Question 4
+def display_colors():
+    color_list = ["Red", "Green", "White", "Black"]
+    print(color_list[0], color_list[-1])
+
+
+# Question 5
+def compute_expression(n):
+    return n + n*2 + n*3
+
+
+# Question 6
+def list_and_tuple():
+    data = input("Enter numbers separated by comma: ")
+    lst = data.split(",")
+    tup = tuple(lst)
+    print("List:", lst)
+    print("Tuple:", tup)
+
+
+# Question 7
+def celsius_to_fahrenheit(c):
+    return (c * 9/5) + 32
+
+
+# Question 8
+def swap_numbers(a, b):
+    print("Before swap:", a, b)
+    a, b = b, a
+    print("After swap:", a, b)
+
+
+# Question 9
+def check_even_odd(n):
+    if n % 2 == 0:
+        print("Even")
+    else:
+        print("Odd")
+
+
+# Question 10
+def leap_year(year):
+    if (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0):
+        print("Leap year")
+    else:
+        print("Not a leap year")
+
+
+# Question 11
+def difference_between_dates(date1, date2):
+    from datetime import date
+    d1 = date(*date1)
+    d2 = date(*date2)
+    return abs((d2 - d1).days)
+
+
+# Question 12
+def triangle_check(a, b, c):
+    if a + b > c and a + c > b and b + c > a:
+        print("Forms a triangle")
+    else:
+        print("Does not form a triangle")
+
+
+# Question 13
+def compound_interest(principal, rate, time):
+    amount = principal * (1 + rate/100) ** time
+    return amount - principal
+
+
+# Question 14
+def is_prime(n):
+    if n <= 1:
+        return False
+    for i in range(2, int(n**0.5)+1):
+        if n % i == 0:
+            return False
+    return True
+
+
+# Question 15
+def sum_of_series(N):
+    return sum(i**2 for i in range(1, N+1))
