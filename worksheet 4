@@ -1,0 +1,70 @@
+import numpy as np
+
+# Question 1: Array Creation
+arr1 = np.arange(5, 26)  # 1.1
+arr2 = np.random.randint(10, 51, size=(3, 4))  # 1.2
+
+# Question 2: Array Attributes
+print("Q2.1 -> Shape:", arr1.shape, " Size:", arr1.size, " Dtype:", arr1.dtype)
+print("Q2.2 -> Shape:", arr2.shape, " Size:", arr2.size, " Dtype:", arr2.dtype)
+
+# Question 3: Array Operations
+array1 = np.array([2, 4, 6, 8, 10])
+array2 = np.array([1, 3, 5, 7, 9])
+print("Addition:", array1 + array2)
+print("Subtraction:", array1 - array2)
+print("Multiplication:", array1 * array2)
+print("Division:", array1 / array2)
+
+# Question 4: Broadcasting
+arr3 = np.arange(1, 10).reshape(3, 3)
+print("Broadcasting *5:\n", arr3 * 5)
+
+# Question 5: Slicing and Indexing
+arr4 = np.arange(10, 26).reshape(4, 4)
+print("Second row:", arr4[1])
+print("Last column:", arr4[:, -1])
+arr4[0] = 0
+print("After replacing first row with 0s:\n", arr4)
+
+# Question 6: Boolean Indexing
+arr5 = np.random.randint(20, 41, size=10)
+print("Array:", arr5)
+print("Elements > 30:", arr5[arr5 > 30])
+
+# Question 7: Reshaping
+arr6 = np.arange(11, 23)
+arr6_reshaped = arr6.reshape(3, 4)
+print("Reshaped Array:\n", arr6_reshaped)
+
+# Question 8: Matrix Operations
+A = np.array([[1, 2], [3, 4]])
+B = np.array([[5, 6], [7, 8]])
+print("Matrix Multiplication:\n", A @ B)
+print("Transpose of A:\n", A.T)
+
+# Question 9: Statistical Functions
+arr7 = np.random.randint(10, 61, size=15)
+print("Array:", arr7)
+print("Mean:", np.mean(arr7))
+print("Median:", np.median(arr7))
+print("Standard Deviation:", np.std(arr7))
+
+# Question 10: Linear Algebra
+A = np.array([[2, 1, 3],
+              [0, 5, 6],
+              [7, 8, 9]])
+print("Determinant:", np.linalg.det(A))
+print("Inverse:\n", np.linalg.inv(A))
+eigvals, eigvecs = np.linalg.eig(A)
+print("Eigenvalues:", eigvals)
+print("Eigenvectors:\n", eigvecs)
+
+# Question 11: Robot Path
+positions = np.array([[0,0],[2,3],[4,7],[7,10],[10,15]])
+# 11.1 Euclidean distance between first and last
+dist = np.linalg.norm(positions[-1] - positions[0])
+print("Euclidean distance:", dist)
+# 11.2 Total distance traveled step by step
+step_dist = np.sum(np.linalg.norm(np.diff(positions, axis=0), axis=1))
+print("Total Distance traveled:", step_dist)
