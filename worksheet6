@@ -1,0 +1,87 @@
+import pandas as pd
+from io import StringIO
+
+# 1.1
+print("Pandas version:", pd.__version__)
+
+# 1.2 create DataFrame
+df = pd.DataFrame({
+    "Name": ["Alice", "Bob", "Charlie"],
+    "Age": [25, 30, 35],
+    "City": ["New York", "Los Angeles", "Chicago"]
+})
+print("\n1.2 DataFrame:\n", df)
+
+# 2.1 Series
+S1 = pd.Series([100, 200, 300, 400, 500])
+print("\n2.1 Series S1:\n", S1)
+
+# 2.2 access second and fourth elements
+print("\n2.2 Second element:", S1.iloc[1])
+print("2.2 Fourth element:", S1.iloc[3])
+
+# 2.3 Series operations
+S2 = pd.Series([10, 20, 30, 40, 50])
+print("\n2.3 S1 + S2:\n", S1 + S2)
+
+# 3.1 access columns
+print("\n3.1 Name and City columns:\n", df[["Name", "City"]])
+
+# 3.2 add Salary column
+df["Salary"] = [50000, 60000, 70000]
+print("\n3.2 Updated DataFrame:\n", df)
+
+# 3.3 basic statistics
+print("\n3.3 Average Age:", df["Age"].mean())
+print("3.3 Total Salary:", df["Salary"].sum())
+
+# 4.1 conditional filtering Age > 28
+filtered = df[df["Age"] > 28]
+print("\n4.1 Rows with Age > 28:\n", filtered)
+
+# 4.2 set and reset index
+df_indexed = df.set_index("Name")
+print("\n4.2 Set 'Name' as index:\n", df_indexed)
+df_reset = df_indexed.reset_index()
+print("\n4.2 Reset index:\n", df_reset)
+
+# 5.1 reading CSV (tries to read employees.csv, falls back to sample)
+csv_path = "employees.csv"
+try:
+    employees = pd.read_csv(csv_path)
+except FileNotFoundError:
+    sample = """Name,Department,Salary
+John,Sales,50000
+Jane,Marketing,60000
+Emily,HR,55000
+"""
+    employees = pd.read_csv(StringIO(sample))
+print("\n5.1 employees DataFrame:\n", employees)
+
+# 5.2 filter Salary > 55000 and print Name, Department
+emp_filtered = employees[employees["Salary"] > 55000][["Name", "Department"]]
+print("\n5.2 Filtered (Salary > 55000) Name & Department:\n", emp_filtered)
+
+# 6.1 average Salary by Department
+avg_by_dept = employees.groupby("Department", as_index=False)["Salary"].mean()
+print("\n6.1 Average Salary by Department:\n", avg_by_dept)
+
+# 6.2 min and max Salary by Department
+minmax_by_dept = employees.groupby("Department")["Salary"].agg(["min", "max"]).reset_index()
+print("\n6.2 Min and Max Salary by Department:\n", minmax_by_dept)
+
+# 7.1 merging two DataFrames
+df1 = pd.DataFrame({
+    "Name": ["John", "Jane", "Emily"],
+    "Department": ["Sales", "Marketing", "HR"]
+})
+df2 = pd.DataFrame({
+    "Name": ["John", "Jane", "Emily"],
+    "Experience (Years)": [5, 7, 3]
+})
+merged = pd.merge(df1, df2, on="Name")
+print("\n7.1 Merged DataFrame:\n", merged)
+
+# 8.1 sorting by Experience descending
+sorted_df = merged.sort_values(by="Experience (Years)", ascending=False).reset_index(drop=True)
+print("\n8.1 Sorted by Experience (descending):\n", sorted_df)
