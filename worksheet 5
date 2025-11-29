@@ -1,0 +1,208 @@
+# ============================
+# Work Sheet 5 
+
+# ============================
+
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy import stats, linalg, interpolate, signal, optimize, integrate
+from scipy.fftpack import fft2
+from scipy.optimize import curve_fit
+
+# ---------------------------------------------------------------
+# Q1 – Random Array + Mean, Median, Variance
+# ---------------------------------------------------------------
+data = np.random.rand(10)
+print("\nQ1 Results:")
+print("Mean:", np.mean(data))
+print("Median:", np.median(data))
+print("Variance:", np.var(data))
+
+
+# ---------------------------------------------------------------
+# Q2 – 2D Array + FFT
+# ---------------------------------------------------------------
+arr = np.random.rand(4, 4)
+fft_result = fft2(arr)
+print("\nQ2 Results:\n", fft_result)
+
+
+# ---------------------------------------------------------------
+# Q3 – Determinant, Inverse, Eigenvalues
+# ---------------------------------------------------------------
+A = np.array([[2, 1], [5, 3]])
+print("\nQ3 Results:")
+print("Determinant:", linalg.det(A))
+print("Inverse:\n", linalg.inv(A))
+print("Eigenvalues:", linalg.eigvals(A))
+
+
+# ---------------------------------------------------------------
+# Q4 – Interpolation
+# ---------------------------------------------------------------
+x = np.array([0, 1, 2, 3])
+y = np.array([2, 4, 6, 12])
+f = interpolate.interp1d(x, y)
+print("\nQ4 Result at x=1.5:", f(1.5))
+
+
+# ---------------------------------------------------------------
+# Q5 – Signal Filtering
+# ---------------------------------------------------------------
+t = np.linspace(0, 10, 200)
+noisy = np.sin(2*t) + 0.4*np.random.randn(200)
+
+b, a = signal.butter(3, 0.1)
+filtered = signal.filtfilt(b, a, noisy)
+print("\nQ5 Filtered Data Sample:", filtered[:5])
+
+
+# ---------------------------------------------------------------
+# Q6 – Sales Data for 12 Months × 4 Products
+# ---------------------------------------------------------------
+sales = np.random.randint(100, 500, (12, 4))
+month_total = sales.sum(axis=1)
+
+best = month_total.argmax() + 1
+worst = month_total.argmin() + 1
+
+print("\nQ6 Results:")
+print("Total Sales:", sales.sum())
+print("Average Sales:", sales.mean())
+print("Best Month:", best)
+print("Worst Month:", worst)
+
+
+# ---------------------------------------------------------------
+# Q7 – Student Marks Analysis
+# ---------------------------------------------------------------
+students = np.array([
+    [85, 78, 92, 88],
+    [79, 82, 74, 90],
+    [90, 85, 89, 92],
+    [66, 75, 80, 78],
+    [70, 68, 75, 85]
+])
+
+total_marks = students.sum(axis=1)
+average_marks = students.mean(axis=1)
+
+print("\nQ7 Results:")
+print("Total Marks:", total_marks)
+print("Avg Marks:", average_marks)
+print("Topper:", total_marks.argmax()+1)
+print("Weakest:", total_marks.argmin()+1)
+
+
+# ---------------------------------------------------------------
+# Q8 – Curve Fitting Quadratic v(t)=at²+bt+c
+# ---------------------------------------------------------------
+t = np.array([0,1,2,3,4,5])
+v = np.array([2,3.1,7.9,18.2,34.3,56.2])
+
+def model(t,a,b,c):
+    return a*t*t + b*t + c
+
+params, _ = curve_fit(model, t, v)
+print("\nQ8 Curve Fit Coefficients (a,b,c):", params)
+
+
+# ---------------------------------------------------------------
+# Q9 – Same as Q7 But With Plots
+# ---------------------------------------------------------------
+plt.figure()
+plt.plot(total_marks, marker="o")
+plt.title("Q9 – Total Marks of Students")
+plt.xlabel("Student Index")
+plt.ylabel("Total Marks")
+
+
+# ---------------------------------------------------------------
+# Q10 – Curve Fit Plot
+# ---------------------------------------------------------------
+plt.figure()
+plt.scatter(t, v, label="Original Data")
+plt.plot(t, model(t, *params), label="Fitted Curve")
+plt.legend()
+plt.title("Q10 – Velocity Curve Fit")
+
+
+# ---------------------------------------------------------------
+# Q11 – Correlation + Interpolation of Population
+# ---------------------------------------------------------------
+years = np.array([2000, 2005, 2010, 2015, 2020])
+pop = np.array([50, 55, 70, 80, 90])
+
+corr = np.corrcoef(years, pop)[0, 1]
+print("\nQ11 Pearson Correlation:", corr)
+
+f2 = interpolate.interp1d(years, pop)
+print("Population in 2008:", f2(2008))
+
+plt.figure()
+plt.plot(years, pop, "o-")
+plt.title("Q11 – Population Interpolation")
+
+
+# ---------------------------------------------------------------
+# Q12 – Roots + Polynomial Plot
+# ---------------------------------------------------------------
+coeffs = [3, -5, 2, -8]
+roots = np.roots(coeffs)
+print("\nQ12 Roots of Polynomial:", roots)
+
+x_vals = np.linspace(-3, 3, 200)
+y_vals = 3*x_vals**3 - 5*x_vals**2 + 2*x_vals - 8
+
+plt.figure()
+plt.plot(x_vals, y_vals)
+plt.scatter(roots.real, np.zeros_like(roots), color="red")
+plt.title("Q12 – Polynomial Plot")
+
+
+# ---------------------------------------------------------------
+# Q13 – File Performance Test (Concept Only)
+# ---------------------------------------------------------------
+print("\nQ13 – File Test Skipped (Requires actual files)")
+
+
+# ---------------------------------------------------------------
+# Q14 – Local Minima of f(x)=x⁴−3x³+2
+# ---------------------------------------------------------------
+def f(x):
+    return x**4 - 3*x**3 + 2
+
+result = optimize.minimize(f, x0=0)
+print("\nQ14 Local Minima at:", result.x)
+
+plt.figure()
+plt.plot(x_vals, f(x_vals))
+plt.scatter(result.x, f(result.x), color="red")
+plt.title("Q14 – Local Minima")
+
+
+# ---------------------------------------------------------------
+# Q15 – Damped Oscillator ODE
+# ---------------------------------------------------------------
+def ode(theta, t):
+    th, th_dot = theta
+    dth = th_dot
+    dthdot = -0.2*th_dot - 5*th
+    return [dth, dthdot]
+
+time = np.linspace(0, 20, 300)
+sol = integrate.odeint(ode, [1, 0], time)
+
+theta_vals = sol[:,0]
+max_disp = theta_vals.max()
+max_time = time[theta_vals.argmax()]
+
+print("\nQ15 Max Displacement:", max_disp)
+print("Occurs at time:", max_time)
+
+plt.figure()
+plt.plot(time, theta_vals)
+plt.title("Q15 – Damped Motion θ(t)")
+
+
+plt.show()
