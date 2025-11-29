@@ -1,0 +1,74 @@
+# -----------------------------------------------------
+# TO-DO LIST APPLICATION | Project 2
+# Course: URA302 - Python Programming
+# Instructor: Dr. Rohit Kumar Singla
+# Author: Navya Sharma
+# -----------------------------------------------------
+
+# Function to add a new task
+def add_task(todo_list):
+    task = input("Enter a new task: ").strip()
+    if task:
+        todo_list.append(task)
+        print(f"Task added: '{task}'\n")
+    else:
+        print("You entered an empty task. Try again!\n")
+
+# Function to view all tasks
+def view_tasks(todo_list):
+    if not todo_list:
+        print("Your to-do list is empty!\n")
+    else:
+        print("\nYour To-Do List:")
+        for i, task in enumerate(todo_list, start=1):
+            print(f"{i}. {task}")
+        print()  # blank line for spacing
+
+# Function to delete a task
+def delete_task(todo_list):
+    if not todo_list:
+        print("No tasks to delete! Your list is empty.\n")
+        return
+
+    view_tasks(todo_list)
+    try:
+        index = int(input("Enter the task number to delete: ")) - 1
+        if 0 <= index < len(todo_list):
+            removed = todo_list.pop(index)
+            print(f"Task removed: '{removed}'\n")
+        else:
+            print("Invalid task number!\n")
+    except ValueError:
+        print("Please enter a valid number.\n")
+
+# Main program loop
+def todo_app():
+    todo_list = []   # ✅ Keep the same list for all operations
+    print("Welcome to the To-Do List App!\n")
+
+    while True:
+        print("Choose an option:")
+        print("1. Add Task")
+        print("2. View Tasks")
+        print("3. Delete Task")
+        print("4. Exit")
+
+        choice = input("\nEnter your choice (1-4): ").strip()
+
+        if choice == '1':
+            add_task(todo_list)
+        elif choice == '2':
+            view_tasks(todo_list)
+        elif choice == '3':
+            delete_task(todo_list)
+        elif choice == '4':
+            print("Exiting the To-Do List App. Have a great day!")
+            break
+        else:
+            print("Invalid choice! Please select between 1 and 4.\n")
+
+        print("-" * 40)
+
+# Run the program
+if __name__ == "__main__":
+    todo_app()
