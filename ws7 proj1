@@ -1,0 +1,91 @@
+# ------------------------------------------
+# TIC TAC TOE GAME - Project 1
+# Author: Navya Sharma
+# Course: URA302 | Python Programming
+# Instructor: Dr. Rohit Kumar Singla
+# ------------------------------------------
+
+# Function to print the Tic-Tac-Toe board
+def print_board(board):
+    print("\n")
+    print(f" {board[0]} | {board[1]} | {board[2]} ")
+    print("---|---|---")
+    print(f" {board[3]} | {board[4]} | {board[5]} ")
+    print("---|---|---")
+    print(f" {board[6]} | {board[7]} | {board[8]} ")
+    print("\n")
+
+# Function to check if a player has won
+def check_winner(board, player):
+    win_combinations = [
+        [0, 1, 2], [3, 4, 5], [6, 7, 8],  # Rows
+        [0, 3, 6], [1, 4, 7], [2, 5, 8],  # Columns
+        [0, 4, 8], [2, 4, 6]              # Diagonals
+    ]
+    for combo in win_combinations:
+        if all(board[i] == player for i in combo):
+            return True
+    return False
+
+# Function to check if the game is a tie
+def check_tie(board):
+    return all(space != " " for space in board)
+
+# Function to get a valid move from the player
+def get_player_input(player, board):
+    while True:
+        try:
+            move = int(input(f"Player {player}, enter your move (1-9): ")) - 1
+            if move < 0 or move > 8:
+                print(" Invalid position! Choose between 1 and 9.")
+            elif board[move] != " ":
+                print("Position already taken! Choose another.")
+            else:
+                return move
+        except ValueError:
+            print(" Invalid input! Please enter a number between 1 and 9.")
+
+# Main game loop
+def play_game():
+    print(" Welcome to Tic-Tac-Toe Game ")
+    print("Player X and Player O take turns marking the grid.")
+    print_board([str(i+1) for i in range(9)])
+    print("Let's begin!\n")
+
+    while True:
+        board = [" "] * 9
+        current_player = "X"
+        winner = None
+
+        # Game loop
+        while True:
+            print_board(board)
+            move = get_player_input(current_player, board)
+            board[move] = current_player
+
+            # Check for winner
+            if check_winner(board, current_player):
+                print_board(board)
+                print(f" Congratulations! Player {current_player} wins! \n")
+                winner = current_player
+                break
+
+            # Check for tie
+            if check_tie(board):
+                print_board(board)
+                print(" It's a tie! No winner this time.\n")
+                break
+
+            # Switch player
+            current_player = "O" if current_player == "X" else "X"
+
+        # Replay option
+        play_again = input("Do you want to play again? (y/n): ").lower()
+        if play_again != 'y':
+            print("Thanks for playing Tic-Tac-Toe! Goodbye.")
+            break
+
+
+# Run the game
+if __name__ == "__main__":
+    play_game()
