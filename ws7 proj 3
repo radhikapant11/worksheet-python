@@ -1,0 +1,132 @@
+# -----------------------------------------------------
+# ROBOT PATH PLANNING APPLICATION | Project 3
+# Course: URA302 - Python Programming
+# Instructor: Dr. Rohit Kumar Singla
+# Author: Radhika Pant
+# -----------------------------------------------------
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import heapq
+
+# ------------------ Helper Functions ------------------
+
+# Heuristic Function: Manhattan Distance
+def heuristic(a, b):
+    return abs(a[0] - b[0]) + abs(a[1] - b[1])
+
+# A* Pathfinding Algorithm
+def astar(grid, start, end):
+    rows, cols = grid.shape
+    open_list = []
+    heapq.heappush(open_list, (0 + heuristic(start, end), 0, start))  # (f, g, node)
+    came_from = {}
+    g_score = {start: 0}
+
+    while open_list:
+        _, current_g, current = heapq.heappop(open_list)
+
+        # Destination reached
+        if current == end:
+            path = []
+            while current in came_from:
+                path.append(current)
+                current = came_from[current]
+            path.append(start)
+            path.reverse()
+            return path
+
+        # Explore neighbors (up, down, left, right)
+        for dx, dy in [(-1,0), (1,0), (0,-1), (0,1)]:
+            neighbor = (current[0] + dx, current[1] + dy)
+            if 0 <= neighbor[0] < rows and 0 <= neighbor[1] < cols:
+                if grid[neighbor] == 1:  # obstacle
+                    continue
+                tentative_g = current_g + 1
+                if neighbor not in g_score or tentative_g < g_score[neighbor]:
+                    g_score[neighbor] = tentative_g
+                    f = tentative_g + heuristic(neighbor, end)
+                    heapq.heappush(open_list, (f, tentative_g, neighbor))
+                    came_from[neighbor] = current
+
+    return None  # No valid path
+
+# Visualization Function
+def visualize_grid(grid, path, start, end):
+    plt.figure(figsize=(6,6))
+    plt.imshow(grid, cmap="gray_r")  # black = obstacles, white = free space
+
+    # Plot path
+    if path:
+        path_x = [p[1] for p in path]
+        path_y = [p[0] for p in path]
+        plt.plot(path_x, path_y, 'r.-', label="Path")  # red line for path
+
+    # Mark start and end
+    plt.scatter(start[1], start[0], c='green', s=120, label="Start")
+    plt.scatter(end[1], end[0], c='blue', s=120, label="Destination")
+
+    plt.title("Robot Path Planning using A* Algorithm")
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+
+# ------------------ Main Program ------------------
+
+def robot_path_planning():
+    print("🤖 Welcome to the Robot Path Planning Application 🤖\n")
+
+    while True:
+        # Get grid size
+        rows = int(input("Enter number of rows: "))
+        cols = int(input("Enter number of columns: "))
+
+        grid = np.zeros((rows, cols), dtype=int)
+
+        # Get obstacles
+        num_obs = int(input("Enter number of obstacles: "))
+        for i in range(num_obs):
+            r, c = map(int, input(f"Enter obstacle {i+1} position (row col): ").split())
+            if 0 <= r < rows and 0 <= c < cols:
+                grid[r][c] = 1
+
+        # Display grid using Pandas
+        print("\nInitial Grid (0 = Free, 1 = Obstacle):")
+        print(pd.DataFrame(grid))
+
+        # Get start and destination
+        start = tuple(map(int, input("Enter start position (row col): ").split()))
+        end = tuple(map(int, input("Enter destination position (row col): ").split()))
+
+        # Run A* Algorithm
+        print("\nFinding path...\n")
+        path = astar(grid, start, end)
+
+        if path:
+            print(" Path found!")
+            print("Path coordinates:")
+            print(path)
+
+            # Mark the path on a copy of the grid for display
+            grid_display = grid.copy()
+            for r, c in path:
+                if (r, c) != start and (r, c) != end:
+                    grid_display[r][c] = 2  # mark path cells
+
+            print("\nGrid with Path (2 = Path):")
+            print(pd.DataFrame(grid_display))
+
+            visualize_grid(grid, path, start, end)
+        else:
+            print(" No valid path found! The destination is unreachable.")
+
+        # Retry Option
+        retry = input("\nDo you want to try again with new positions? (y/n): ").lower()
+        if retry != 'y':
+            print(" Exiting Robot Path Planning Application. Goodbye!")
+            break
+
+# Run the program
+if __name__ == "__main__":
+    robot_path_planning()
